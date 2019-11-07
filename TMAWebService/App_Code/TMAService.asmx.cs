@@ -457,11 +457,11 @@ namespace TMAWebService
 
 //                    service.Store(newRelation);
 
-                if (WriteSendLog(service, user, m_project) == false)
-                {
-                    debugLine = DateTime.Now + " Error writing SendLog"; WriteDebugfile(debugLine); 
-                    retVal = "Error writing SendLog";
-                }
+//                if (WriteSendLog(service, user, m_project) == false)
+//                {
+//                    debugLine = DateTime.Now + " Error writing SendLog"; WriteDebugfile(debugLine); 
+//                    retVal = "Error writing SendLog";
+//                }
                 ///// Build Project Directory
 
 
@@ -518,27 +518,30 @@ namespace TMAWebService
                 service.Store(newVersion);
 
 
-//                   EntityRelation newRelation = new EntityRelation(Code.Find(AppCodes.QUOTE_TARGET_TYPE));
-//                   //newRelation.Entity_IID_1 = m_project.Entity_IID;
-//                   newRelation.Entity_IID_2 = m_project.Entity_IID;
-//                    newRelation.Entity_2_Version_IID = newVersion.Entity_Version_IID;
-//                   newRelation.Entity_2.Description = projDescription;
+                //                   EntityRelation newRelation = new EntityRelation(Code.Find(AppCodes.QUOTE_TARGET_TYPE));
+                //                   //newRelation.Entity_IID_1 = m_project.Entity_IID;
+                //                   newRelation.Entity_IID_2 = m_project.Entity_IID;
+                //                    newRelation.Entity_2_Version_IID = newVersion.Entity_Version_IID;
+                //                   newRelation.Entity_2.Description = projDescription;
 
-//                    service.Store(newRelation);
+                //                    service.Store(newRelation);
 
-                if (WriteSendLog(service, user, m_project) == false)
-                { retVal = "Error writing SendLog"; }
+ //               if (WriteSendLog(service, user, m_project) == false)
+ //               {
+ //                   debugLine = DateTime.Now + " Error writing SendLog"; WriteDebugfile(debugLine);
+ //                   retVal = "Error writing SendLog";
+ //               }
                 ///// Build Project Directory
 
 
                 //m_project.OID.Substring(4, m_project.OID.Length - 4));
-
+                debugLine = DateTime.Now + " MTD Mode2 " + MTD_Mode; WriteDebugfile(debugLine);
                 entityIIDArray = scpMgr.getScopeInfo(srcMount, projName, projDescription, XMLMsg, srcLangCode, targetLangCodes, targLangCount, filetype, m_project, service, WS_Client_Name, Project_Type, MTD_Mode, WSurl, mtdProjectNum, projAttribs);
                 projectTrackingCode = entityIIDArray[2] + "_" + entityIIDArray[3];
                 wsProjectID = Convert.ToString(entityIIDArray[3]);
 
                 //finally, create directory
-
+               debugLine = DateTime.Now + " MTD Mode3 " + MTD_Mode; WriteDebugfile(debugLine);
                 bdr = new BuildDir();
                 bdr.buildProjDirStructure(mtdProjectYYMM, mtdProjectSeqNum, false);
                 quoteDir = bdr.buildQuoteDirectory(quotePathPrefix, yyyyMMDDHHMM, projName, XMLFileName);
@@ -595,7 +598,7 @@ namespace TMAWebService
                 debugLine = DateTime.Now + " Built quote directory " + quoteDir; WriteDebugfile(debugLine);
 
 
-                WriteSendLog(service, user, m_project);
+//                WriteSendLog(service, user, m_project);
                 create_m_Task(service,ContactIID,salesIID,m_project.Entity_IID,"Quote Request",srcLangCode.Internal_Description,transLangDesc,XMLfilesNameDesc);
 
                 retVal = projectTrackingCode;
@@ -675,7 +678,7 @@ namespace TMAWebService
             
             WSLocale wsloc = null;
 
-            if (WS_Client_Name == "Seagate")
+           if (WS_Client_Name == "Seagate")
             {
                 wsloc = userManager.getLocale2(GetSeagateLocID(wslocaleID));
             }
@@ -827,6 +830,7 @@ namespace TMAWebService
             {
                 locale2 = locale;
             }
+            debugLine = DateTime.Now + " Got Locale 2 = MTD_GUID " + MTD_GUID + ", projectTrackerID " + projectTrackerID + ", locale2 " + locale2 + ", locale " + locale; WriteDebugfile(debugLine);
 
             locale = locale.Replace('-', '_');
             string wsLocale = getWSLocale(locale2);
@@ -836,7 +840,7 @@ namespace TMAWebService
             }
             ProjectCollection m_projects = service.LoadProjectCollection(mtdQuoteNum);
             
-//            debugLine = DateTime.Now + " Got Project Collection = MTD_GUID " + MTD_GUID + ", projectTrackerID " + projectTrackerID + ", locale " + locale; WriteDebugfile(debugLine);
+            debugLine = DateTime.Now + " Got Project Collection = MTD_GUID " + MTD_GUID + ", projectTrackerID " + projectTrackerID + ", locale " + locale; WriteDebugfile(debugLine);
             
             foreach (BaseExtendable project in m_projects)
             {
@@ -857,7 +861,7 @@ namespace TMAWebService
             string retValue = null;
             string wsCopyPath = wsRootDir + wsClientName + "\\Projects\\" + wsPrjGroupNum + "_" + projectName + "\\Target-" + wsLocale + " - UTF8\\";
 
- //           debugLine = DateTime.Now + " Got WS Path = MTD_GUID " + MTD_GUID + ", projectTrackerID " + projectTrackerID + ", locale " + locale + "\n" + wsCopyPath; WriteDebugfile(debugLine);
+            debugLine = DateTime.Now + " Got WS Path = MTD_GUID " + MTD_GUID + ", projectTrackerID " + projectTrackerID + ", locale " + locale + "\n" + wsCopyPath; WriteDebugfile(debugLine);
 
             //Set up myML project path
             string mtdProjectYYMM = mtdProjectNum.Substring(0, 4);
@@ -871,7 +875,7 @@ namespace TMAWebService
                 // Get WS file Array
                 string myMLWSFilesPath = null;
                 string[] wsFileEntries = Directory.GetFiles(wsCopyPath);
-//                debugLine = DateTime.Now + " Got WS files = MTD_GUID " + MTD_GUID + ", projectTrackerID " + projectTrackerID + ", locale " + locale; WriteDebugfile(debugLine);
+                debugLine = DateTime.Now + " Got WS files = MTD_GUID " + MTD_GUID + ", projectTrackerID " + projectTrackerID + ", locale " + locale; WriteDebugfile(debugLine);
 
                 // Recurse into subdirectories of this directory. 
                 string[] subdirectoryEntries = Directory.GetDirectories(myMLPath);
@@ -883,7 +887,7 @@ namespace TMAWebService
                         string[] subPathArray = subdirectory.Split('\\');
                         string mySubdirectory = subPathArray[subPathArray.Length - 1];
                         myMLWSFilesPath = myMLPath + "\\" + mySubdirectory + "\\";
-//                        debugLine = DateTime.Now + " Got myMLWSFilesPath = " + myMLWSFilesPath + ", MTD_GUID " + MTD_GUID + ", projectTrackerID " + projectTrackerID + ", locale " + locale; WriteDebugfile(debugLine);
+                        debugLine = DateTime.Now + " Got myMLWSFilesPath = " + myMLWSFilesPath + ", MTD_GUID " + MTD_GUID + ", projectTrackerID " + projectTrackerID + ", locale " + locale; WriteDebugfile(debugLine);
                         returnPackageExist = true;
                     }
                 }
@@ -943,7 +947,7 @@ namespace TMAWebService
                     }
                 }
 
-//                debugLine = DateTime.Now + " Copied files over to P: drive =" + myLocalePath + ", MTD_GUID " + MTD_GUID + ", projectTrackerID " + projectTrackerID + ", locale " + locale; WriteDebugfile(debugLine);
+                debugLine = DateTime.Now + " Copied files over to P: drive =" + myLocalePath + ", MTD_GUID " + MTD_GUID + ", projectTrackerID " + projectTrackerID + ", locale " + locale; WriteDebugfile(debugLine);
 
                 MiscTools.undoImpersonation(impersonationContext);
             }
@@ -1443,6 +1447,11 @@ namespace TMAWebService
                         return "French (Belgium)";
                     }
 
+                case "fr-CA":
+                    {
+                        return "French (Canada)";
+                    }
+
                 case "fr-FR":
                     {
                         return "French (France)";
@@ -1625,6 +1634,11 @@ namespace TMAWebService
                 case "fr-BE":
                     {
                         return "French (Belgium)";
+                    }
+
+                case "fr-CA":
+                    {
+                        return "French (Canada)";
                     }
 
                 case "fr-FR":
@@ -2314,7 +2328,6 @@ namespace TMAWebService
             wslog.Description = "Test description";
             wslog.Quote_IID = project.Entity_IID;
             wslog.Send_ID = user.User_IID;
-            string seqNo = service.NextSequenceNumber(true);
             wslog.Seq_Number = 1;
 
 /*
@@ -2325,7 +2338,6 @@ namespace TMAWebService
             }
             catch (Exception err) { return false; }
 */
-
             int tries = 3;
             while (true)
             {
@@ -2333,6 +2345,7 @@ namespace TMAWebService
                 {
                     service.Store(wslog);
                     debugLine = DateTime.Now + " WriteSendLog.service.Store (SUCCESS)"; WriteDebugfile(debugLine);
+                    string seqNo = service.NextSequenceNumber(true);
                     return true; // success!
                 }
                 catch
@@ -2344,6 +2357,7 @@ namespace TMAWebService
                     Thread.Sleep(1000); // 1 second
                 }
             }
+
         }
     }
         [XmlRootAttribute(ElementName = "TMAMessage", IsNullable = false)]
