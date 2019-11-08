@@ -79,17 +79,24 @@ namespace TMAWebService
             Base.Attribute cleanAttr = newQuote.Attributes.Add(Code.Find("PROJECT_ATTR", "PRE_TRANS_CLEANING"), this.CleanCheckBox.Checked);
             cleanAttr.SetParent(newQuote.Attributes);
             */
-            
-            DateTime dTime = new DateTime(2012, 09, 01, 12, 00, 00);
+
+            //DateTime dTime = new DateTime(2012, 09, 01, 12, 00, 00);
             //String dTime;
             //dTime = defDTime.ToString("yyyy-MM-dd HH:mm tt");
-                
-            Base.Attribute dateAttr = newQuote.Attributes.Add(Code.Find("PROJECT_ATTR","QUOTE_DUE_DT"), dTime);
-                dateAttr.SetParent(newQuote.Attributes);
-            /*
-            Base.Attribute dateAttr = newQuote.Attributes.Add(Code.Find("PROJECT_ATTR", "ASSESS_DUE_DT"), dTime);
-                dateAttr.SetParent(newQuote.Attributes);
 
+            Base.Attribute dateQuoteStartAttr = newQuote.Attributes.Add(Code.Find("PROJECT_ATTR", "QUOTE_START_DT"), DateTime.Now);
+            dateQuoteStartAttr.SetParent(newQuote.Attributes);
+
+            Base.Attribute dateAssessStartAttr = newQuote.Attributes.Add(Code.Find("PROJECT_ATTR", "ASSESS_START_DT"), DateTime.Now);
+            dateAssessStartAttr.SetParent(newQuote.Attributes);
+
+            Base.Attribute dateQuoteDueeAttr = newQuote.Attributes.Add(Code.Find("PROJECT_ATTR","QUOTE_DUE_DT"), DateTime.Now.AddDays(1) );
+            dateQuoteDueeAttr.SetParent(newQuote.Attributes);
+
+            Base.Attribute dateAsessDueAttr = newQuote.Attributes.Add(Code.Find("PROJECT_ATTR", "ASSESS_DUE_DT"), DateTime.Now.AddDays(1) );
+            dateAsessDueAttr.SetParent(newQuote.Attributes);
+
+            /*
             Base.Attribute dateAttr = newQuote.Attributes.Add(Code.Find("PROJECT_ATTR", "PROJECT_DUE_DT"), dTime);
                 dateAttr.SetParent(newQuote.Attributes);
             Base.Attribute dateAttr = newQuote.Attributes.Add(Code.Find("PROJECT_ATTR", "PROD_DUE_DT"), dTime);
@@ -184,12 +191,21 @@ namespace TMAWebService
             cleanAttr.SetParent(newQuote.Attributes);
             */
 
-            DateTime dTime = new DateTime(2012, 09, 01, 12, 00, 00);
+            //DateTime dTime = new DateTime(2012, 09, 01, 12, 00, 00);
             //String dTime;
             //dTime = defDTime.ToString("yyyy-MM-dd HH:mm tt");
 
-            Base.Attribute dateAttr = newQuote.Attributes.Add(Code.Find("PROJECT_ATTR", "QUOTE_DUE_DT"), dTime);
-            dateAttr.SetParent(newQuote.Attributes);
+            Base.Attribute dateQuoteStartAttr = newQuote.Attributes.Add(Code.Find("PROJECT_ATTR", "QUOTE_START_DT"), DateTime.Now);
+            dateQuoteStartAttr.SetParent(newQuote.Attributes);
+
+            Base.Attribute dateAssessStartAttr = newQuote.Attributes.Add(Code.Find("PROJECT_ATTR", "ASSESS_START_DT"), DateTime.Now);
+            dateAssessStartAttr.SetParent(newQuote.Attributes);
+
+            Base.Attribute dateQuoteDueeAttr = newQuote.Attributes.Add(Code.Find("PROJECT_ATTR", "QUOTE_DUE_DT"), DateTime.Now.AddDays(1));
+            dateQuoteDueeAttr.SetParent(newQuote.Attributes);
+
+            Base.Attribute dateAsessDueAttr = newQuote.Attributes.Add(Code.Find("PROJECT_ATTR", "ASSESS_DUE_DT"), DateTime.Now.AddDays(1));
+            dateAsessDueAttr.SetParent(newQuote.Attributes);
             /*
             Base.Attribute dateAttr = newQuote.Attributes.Add(Code.Find("PROJECT_ATTR", "ASSESS_DUE_DT"), dTime);
                 dateAttr.SetParent(newQuote.Attributes);
